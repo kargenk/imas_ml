@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 import re
-from urllib.error import HTTPError, URLError
+from urllib.error import HTTPError
 from urllib.request import urlopen
 
 
@@ -22,6 +22,7 @@ def get_title(url: str) -> str:
     try:
         html = urlopen(url)
     except HTTPError as e:
+        print(e)
         return None
 
     # ページのコンテンツを取得できたか
@@ -29,6 +30,7 @@ def get_title(url: str) -> str:
         bs = BeautifulSoup(html.read(), 'html.parser')
         title = bs.body.h1
     except AttributeError as e:
+        print(e)
         return None
 
     return title
